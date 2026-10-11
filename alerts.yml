@@ -1,0 +1,11 @@
+groups:
+  - name: host-health
+    rules:
+      - alert: ExporterTargetDown
+        expr: up{job="node-exporter"} == 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Node exporter target is unreachable"
+          description: "Prometheus has been unable to scrape {{ $labels.instance }} for more than two minutes."
